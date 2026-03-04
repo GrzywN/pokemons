@@ -1,4 +1,4 @@
-import { QueryClient } from "@tanstack/react-query";
+import { QueryClient } from '@tanstack/react-query';
 
 const SECOND_IN_MS = 1000 as const;
 const MINUTE_IN_MS = 60 * SECOND_IN_MS;
@@ -17,4 +17,3 @@ export const queryClient = new QueryClient({
     },
   },
 });
-
