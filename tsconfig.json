@@ -3,6 +3,9 @@
   "compilerOptions": {
     /* Bundler mode */
     "allowImportingTsExtensions": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
 
     /* Linting */
     "strict": true,
