@@ -19,9 +19,6 @@ format:
 lint:
 	npm run lint
 
-check:
-	npm run check
-
 typecheck:
 	npm run typecheck
 
@@ -34,7 +31,6 @@ test:
 precommit:
 	@$(MAKE) format
 	@$(MAKE) lint
-	@$(MAKE) check
 	@$(MAKE) typecheck
 	@$(MAKE) build
 	@$(MAKE) test

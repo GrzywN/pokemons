@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-// biome-ignore lint/nursery/useExplicitType: Type inherited from default value
-function App(appLabel = 'Open up app.tsx to start working on your app!'): React.JSX.Element {
+export default function Camera({
+  appLabel = 'Open up app.tsx to start working on your app!',
+}) {
   return (
     <View style={styles.container}>
       <Text>{appLabel}</Text>
@@ -11,7 +12,7 @@ function App(appLabel = 'Open up app.tsx to start working on your app!'): React.
   );
 }
 
-const styles: ReturnType<typeof StyleSheet.create> = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -19,5 +20,3 @@ const styles: ReturnType<typeof StyleSheet.create> = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-
-export { App };
