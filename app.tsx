@@ -1,16 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function App() {
+// biome-ignore lint/nursery/useExplicitType: Type inherited from default value
+function App(appLabel = 'Open up app.tsx to start working on your app!'): React.JSX.Element {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
+      <Text>{appLabel}</Text>
       <StatusBar style="auto" />
     </View>
   );
 }
 
-const styles = StyleSheet.create({
+const styles: ReturnType<typeof StyleSheet.create> = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -18,3 +19,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+export { App };
