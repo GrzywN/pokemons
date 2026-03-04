@@ -2,6 +2,14 @@
   "name": "pokemons",
   "version": "1.0.0",
   "main": "index.ts",
+  "engines": {
+    "node": "*",
+    "npm": "*",
+    "yarn": "please-use-npm",
+    "pnpm": "please-use-npm",
+    "bun": "please-use-npm",
+    "deno": "please-use-npm"
+  },
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
