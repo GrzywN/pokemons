@@ -57,3 +57,22 @@ export const PokemonSchema = z.object({
 });
 
 export type Pokemon = z.infer<typeof PokemonSchema>;
+
+export const PokemonListRawPageSchema = z.object({
+  count: z.number(),
+  next: z.string().nullable(),
+  previous: z.string().nullable(),
+  results: z.array(z.object({ name: z.string(), url: z.string() })),
+});
+
+export type PokemonListItem = {
+  id: number;
+  name: string;
+  spriteUrl: string;
+};
+
+export type PokemonListPage = {
+  count: number;
+  next: string | null;
+  results: PokemonListItem[];
+};

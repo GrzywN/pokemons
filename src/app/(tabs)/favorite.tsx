@@ -1,5 +1,6 @@
 import { Image } from '@/shared/ui/image';
 import { StatusBar } from '@/shared/ui/status-bar';
+import { formatPokemonId } from '@/shared/utils/format-pokemon-id';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { usePokemon } from '@/features/pokemon';
@@ -42,7 +43,7 @@ export default function Favorite() {
     abilities,
   } = data;
 
-  const formattedId = `#${String(id).padStart(4, '0')}`;
+  const formattedId = formatPokemonId(id);
   const heightInMeters = `${height / 10} m`;
   const weightInKg = `${weight / 10} kg`;
   const sprite = sprites.front_default;
