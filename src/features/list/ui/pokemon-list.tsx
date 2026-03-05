@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 import { useFavoritePokemon } from '@/shared/pokemon';
@@ -29,6 +29,19 @@ export function PokemonList({
     refetch,
   } = usePokemons();
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const renderItem = useCallback(
+    ({ item }: { item: (typeof pokemons)[number] }) => (
+      <PokemonRow
+        item={item}
+        isFavorite={favorite === item.name}
+        onStarPress={() =>
+          favorite === item.name ? clearFavorite() : setFavorite(item.name)
+        }
+      />
+    ),
+    [favorite, setFavorite, clearFavorite],
+  );
 
   async function handleRefresh() {
     setIsRefreshing(true);
@@ -64,15 +77,8 @@ export function PokemonList({
       <FlatList
         data={pokemons}
         keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => (
-          <PokemonRow
-            item={item}
-            isFavorite={favorite === item.name}
-            onStarPress={() =>
-              favorite === item.name ? clearFavorite() : setFavorite(item.name)
-            }
-          />
-        )}
+        renderItem={renderItem}
+        extraData={favorite}
         onEndReached={() => fetchNextPage()}
         onEndReachedThreshold={endReachedThreshold}
         refreshing={isRefreshing}
