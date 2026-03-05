@@ -1,22 +1,21 @@
-import { StatusBar } from '@/shared/ui/status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+  CameraPage,
+  NoCameraDeviceError,
+  PermissionsPage,
+} from '@/features/camera';
+import { useCameraDevice, useCameraPermission } from '@/shared/camera';
 
-export default function Camera({
-  appLabel = 'Open up app.tsx to start working on your app!',
-}) {
-  return (
-    <View style={styles.container}>
-      <Text>{appLabel}</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default function CameraScreen() {
+  const { hasPermission, requestPermission } = useCameraPermission();
+  const device = useCameraDevice('back');
+
+  if (!hasPermission) {
+    return <PermissionsPage onRequestPermission={requestPermission} />;
+  }
+
+  if (device == null) {
+    return <NoCameraDeviceError />;
+  }
+
+  return <CameraPage device={device} />;
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

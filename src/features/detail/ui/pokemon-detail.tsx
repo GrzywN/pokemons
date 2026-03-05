@@ -1,4 +1,3 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import {
   ScrollView,
   StyleSheet,
@@ -8,6 +7,7 @@ import {
 } from 'react-native';
 
 import { useFavoritePokemon } from '@/shared/pokemon';
+import { Icon } from '@/shared/ui/icon';
 import { Image } from '@/shared/ui/image';
 import { StatusBar } from '@/shared/ui/status-bar';
 import { formatPokemonId } from '@/shared/utils/format-pokemon-id';
@@ -76,7 +76,7 @@ export function PokemonDetail({ nameOrId }: PokemonDetailProps) {
         <TouchableOpacity
           onPress={clearFavorite}
           style={styles.unfavoriteButton}>
-          <FontAwesome name="star" size={16} color="#f5a623" />
+          <Icon name="star" size={16} color="#f5a623" />
           <Text style={styles.unfavoriteText}>Remove from favorites</Text>
         </TouchableOpacity>
       )}

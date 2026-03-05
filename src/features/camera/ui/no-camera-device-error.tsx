@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { Icon, type IconName } from '@/shared/ui/icon';
 
-export interface FavoriteEmptyStateProps {
+export interface NoCameraDeviceErrorProps {
   iconName?: IconName;
   iconSize?: number;
   iconColor?: string;
@@ -9,13 +9,13 @@ export interface FavoriteEmptyStateProps {
   message?: string;
 }
 
-export function FavoriteEmptyState({
-  iconName = 'star-o',
+export function NoCameraDeviceError({
+  iconName = 'exclamation-circle',
   iconSize = 48,
   iconColor = '#ccc',
-  title = 'No favorite Pokémon yet',
-  message = 'Tap ★ next to any Pokémon in the list',
-}: FavoriteEmptyStateProps) {
+  title = 'No camera found',
+  message = 'Your device does not have a usable camera.',
+}: NoCameraDeviceErrorProps) {
   return (
     <View style={styles.centered}>
       <Icon name={iconName} size={iconSize} color={iconColor} />

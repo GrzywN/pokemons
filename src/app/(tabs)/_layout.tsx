@@ -1,9 +1,7 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
-import type { ComponentProps } from 'react';
+import { Icon, type IconName } from '@/shared/ui/icon';
 
-export type FontAwesomeName = ComponentProps<typeof FontAwesome>['name'];
-export type Tab = { title: string; icon: FontAwesomeName };
+export type Tab = { title: string; icon: IconName };
 
 const TABS = {
   favorite: { title: 'Favorite', icon: 'star' },
@@ -22,7 +20,7 @@ function TabLayout(tabBarActiveTintColor = 'blue', iconSize = 28) {
           options={{
             title,
             tabBarIcon: ({ color }) => (
-              <FontAwesome size={iconSize} name={icon} color={color} />
+              <Icon size={iconSize} name={icon} color={color} />
             ),
           }}
         />

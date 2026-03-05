@@ -29,7 +29,20 @@
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-    "plugins": ["expo-router", "expo-image"],
+    "plugins": [
+      "expo-router",
+      "expo-image",
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera."
+
+          // optionally, if you want to record audio:
+          // "enableMicrophonePermission": true,
+          // "microphonePermissionText": "$(PRODUCT_NAME) needs access to your Microphone."
+        }
+      ]
+    ],
     "scheme": "pokemons",
     "experiments": {
       "typedRoutes": true

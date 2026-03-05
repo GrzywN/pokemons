@@ -1,4 +1,4 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Icon } from '@/shared/ui/icon';
 import { memo } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -37,7 +37,7 @@ export const PokemonRow = memo(function PokemonRow({
         <Text style={styles.id}>{formattedId}</Text>
       </View>
       <TouchableOpacity onPress={onStarPress} style={styles.star} hitSlop={8}>
-        <FontAwesome
+        <Icon
           name={isFavorite ? 'star' : 'star-o'}
           size={22}
           color={isFavorite ? '#f5a623' : '#ccc'}

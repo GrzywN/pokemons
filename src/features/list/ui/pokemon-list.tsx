@@ -40,7 +40,7 @@ export function PokemonList({
         }
       />
     ),
-    [favorite, setFavorite, clearFavorite],
+    [favorite, setFavorite, clearFavorite]
   );
 
   async function handleRefresh() {
