@@ -54,7 +54,5 @@ export async function fetchPokemon(
     );
   }
 
-  const data = await response.json();
-
-  return PokemonSchema.parse(data);
+  return PokemonSchema.parse(await response.json());
 }
