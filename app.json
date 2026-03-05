@@ -28,7 +28,7 @@
       "bundler": "metro"
     },
     "plugins": ["expo-router", "expo-image"],
-    "scheme": "your-app-scheme",
+    "scheme": "pokemons",
     "experiments": {
       "typedRoutes": true
     }
