@@ -1,5 +1,5 @@
-import { Image } from 'expo-image';
-import { StatusBar } from 'expo-status-bar';
+import { Image } from '@/shared/ui/image';
+import { StatusBar } from '@/shared/ui/status-bar';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { usePokemon } from '@/features/pokemon';
