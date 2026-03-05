@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
+import { useFavoritePokemon } from '@/shared/pokemon';
 import { FlatList } from '@/shared/ui/flat-list';
 import { StatusBar } from '@/shared/ui/status-bar';
 
@@ -17,6 +18,7 @@ export function PokemonList({
   skeletonCount = 15,
   endReachedThreshold = 0.5,
 }: PokemonListProps) {
+  const { favorite, setFavorite, clearFavorite } = useFavoritePokemon();
   const {
     pokemons,
     isLoading,
@@ -62,7 +64,15 @@ export function PokemonList({
       <FlatList
         data={pokemons}
         keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => <PokemonRow item={item} />}
+        renderItem={({ item }) => (
+          <PokemonRow
+            item={item}
+            isFavorite={favorite === item.name}
+            onStarPress={() =>
+              favorite === item.name ? clearFavorite() : setFavorite(item.name)
+            }
+          />
+        )}
         onEndReached={() => fetchNextPage()}
         onEndReachedThreshold={endReachedThreshold}
         refreshing={isRefreshing}

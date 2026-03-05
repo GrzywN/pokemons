@@ -1,17 +1,23 @@
-import { StyleSheet, Text, View } from 'react-native';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { memo } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+import type { PokemonListItem } from '@/shared/pokemon';
 import { Image } from '@/shared/ui/image';
 import { formatPokemonId } from '@/shared/utils/format-pokemon-id';
-import type { PokemonListItem } from '@/shared/pokemon';
 
 export interface PokemonRowProps {
   item: PokemonListItem;
+  isFavorite: boolean;
+  onStarPress: () => void;
   spritePlaceholder?: string;
   spriteTransition?: number;
 }
 
-export function PokemonRow({
+export const PokemonRow = memo(function PokemonRow({
   item,
+  isFavorite,
+  onStarPress,
   spritePlaceholder = 'LKO2?U%2Tw=w]~RBVZRi};RPxuwH',
   spriteTransition = 200,
 }: PokemonRowProps) {
@@ -30,9 +36,16 @@ export function PokemonRow({
         <Text style={styles.name}>{item.name}</Text>
         <Text style={styles.id}>{formattedId}</Text>
       </View>
+      <TouchableOpacity onPress={onStarPress} style={styles.star} hitSlop={8}>
+        <FontAwesome
+          name={isFavorite ? 'star' : 'star-o'}
+          size={22}
+          color={isFavorite ? '#f5a623' : '#ccc'}
+        />
+      </TouchableOpacity>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   row: {
@@ -60,5 +73,8 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: '#888',
     marginTop: 4,
+  },
+  star: {
+    paddingLeft: 12,
   },
 });

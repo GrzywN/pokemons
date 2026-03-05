@@ -1,5 +1,12 @@
-import { PokemonDetail } from '@/features/detail';
+import { FavoriteEmptyState, PokemonDetail } from '@/features/detail';
+import { useFavoritePokemon } from '@/shared/pokemon';
 
 export default function FavoriteScreen() {
-  return <PokemonDetail />;
+  const { favorite } = useFavoritePokemon();
+
+  if (!favorite) {
+    return <FavoriteEmptyState />;
+  }
+
+  return <PokemonDetail nameOrId={favorite} />;
 }
