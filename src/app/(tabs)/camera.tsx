@@ -3,11 +3,19 @@ import {
   NoCameraDeviceError,
   PermissionsPage,
 } from '@/features/camera';
-import { useCameraDevice, useCameraPermission } from '@/shared/camera';
+import {
+  useCameraDevice,
+  useCameraPermission,
+  type CameraPosition,
+} from '@/shared/camera';
 
-export default function CameraScreen() {
+export interface CameraScreenProps {
+  camera: CameraPosition;
+}
+
+export default function CameraScreen({ camera = 'front' }: CameraScreenProps) {
   const { hasPermission, requestPermission } = useCameraPermission();
-  const device = useCameraDevice('back');
+  const device = useCameraDevice(camera);
 
   if (!hasPermission) {
     return <PermissionsPage onRequestPermission={requestPermission} />;
