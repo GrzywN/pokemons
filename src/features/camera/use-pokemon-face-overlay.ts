@@ -1,12 +1,12 @@
 import { useWindowDimensions } from 'react-native';
 import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import { useFrameProcessor } from 'react-native-vision-camera';
+import { runAsync, useFrameProcessor } from 'react-native-vision-camera';
 import {
   useFaceDetector,
   type FrameFaceDetectionOptions,
 } from 'react-native-vision-camera-face-detector';
 import { Worklets } from 'react-native-worklets-core';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 
 import { usePokemon } from '@/features/detail';
 import { useFavoritePokemon } from '@/shared/pokemon';
@@ -20,7 +20,7 @@ export interface UsePokemonFaceOverlayProps {
     FrameFaceDetectionOptions,
     'performanceMode' | 'landmarkMode' | 'contourMode'
   >;
-};
+}
 
 export function usePokemonFaceOverlay({
   offScreenX = -1000,
@@ -69,29 +69,37 @@ export function usePokemonFaceOverlay({
     [handleFaceLost]
   );
 
-  const { detectFaces } = useFaceDetector({
+  const { detectFaces, stopListeners } = useFaceDetector({
     ...detectorOptions,
     autoMode: true,
     windowWidth,
     windowHeight,
   });
 
+  useEffect(() => {
+    return () => {
+      stopListeners();
+    };
+  }, [stopListeners]);
+
   const frameProcessor = useFrameProcessor(
     (frame) => {
       'worklet';
 
-      const faces = detectFaces(frame);
-      const recognizedFaces = faces.length > 0;
+      runAsync(frame, () => {
+        'worklet';
 
-      if (!recognizedFaces) {
-        handleFaceLostJS();
+        const faces = detectFaces(frame);
+        const recognizedFaces = faces.length > 0;
 
-        return;
-      }
+        if (!recognizedFaces) {
+          handleFaceLostJS();
+          return;
+        }
 
-      const { x, y, width, height } = faces[0]!.bounds;
-
-      handleFaceDetectedJS(x, y, width, height);
+        const { x, y, width, height } = faces[0]!.bounds;
+        handleFaceDetectedJS(x, y, width, height);
+      });
     },
     [detectFaces, handleFaceDetectedJS, handleFaceLostJS]
   );
