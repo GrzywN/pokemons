@@ -1,13 +1,5 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
-import { useFavoritePokemon } from '@/shared/pokemon';
-import { Icon } from '@/shared/ui/icon';
 import { Image } from '@/shared/ui/image';
 import { StatusBar } from '@/shared/ui/status-bar';
 import { formatPokemonId } from '@/shared/utils/format-pokemon-id';
@@ -19,8 +11,6 @@ export interface PokemonDetailProps {
 }
 
 export function PokemonDetail({ nameOrId }: PokemonDetailProps) {
-  const { favorite, clearFavorite } = useFavoritePokemon();
-  const isFavorite = favorite === String(nameOrId);
   const { data, error, isSuccess, isLoading, isError } = usePokemon(nameOrId);
 
   if (isLoading) {
@@ -71,15 +61,6 @@ export function PokemonDetail({ nameOrId }: PokemonDetailProps) {
 
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.id}>{formattedId}</Text>
-
-      {isFavorite && (
-        <TouchableOpacity
-          onPress={clearFavorite}
-          style={styles.unfavoriteButton}>
-          <Icon name="star" size={16} color="#f5a623" />
-          <Text style={styles.unfavoriteText}>Remove from favorites</Text>
-        </TouchableOpacity>
-      )}
 
       <View style={styles.row}>
         {types.map(({ type }) => (
@@ -159,21 +140,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#888',
     marginBottom: 8,
-  },
-  unfavoriteButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    marginBottom: 16,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: '#f5a623',
-  },
-  unfavoriteText: {
-    fontSize: 13,
-    color: '#f5a623',
   },
   row: {
     flexDirection: 'row',
