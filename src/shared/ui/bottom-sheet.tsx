@@ -1,61 +1,26 @@
-import { type ReactNode } from 'react';
-import { Modal, Pressable, StyleSheet, View } from 'react-native';
+import { BottomSheetModal, BottomSheetView } from '@gorhom/bottom-sheet';
+import { type ReactNode, useEffect, useRef } from 'react';
 
 export interface BottomSheetProps {
   visible: boolean;
   onClose: () => void;
   children: ReactNode;
-  transparent?: boolean;
-  animationType?: 'slide' | 'fade' | 'none' | undefined;
 }
 
-export function BottomSheet({
-  visible,
-  onClose,
-  children,
-  transparent = true,
-  animationType = 'slide',
-}: BottomSheetProps) {
-  return (
-    <Modal
-      visible={visible}
-      animationType={animationType}
-      transparent={transparent}
-      onRequestClose={onClose}>
-      <View style={styles.container}>
-        <Pressable style={styles.backdrop} onPress={onClose} />
+export function BottomSheet({ visible, onClose, children }: BottomSheetProps) {
+  const ref = useRef<BottomSheetModal>(null);
 
-        <View style={styles.sheet}>
-          <View style={styles.handle} />
-          {children}
-        </View>
-      </View>
-    </Modal>
+  useEffect(() => {
+    if (visible) {
+      ref.current?.present();
+    } else {
+      ref.current?.dismiss();
+    }
+  }, [visible]);
+
+  return (
+    <BottomSheetModal ref={ref} onDismiss={onClose} snapPoints={['75%']}>
+      <BottomSheetView>{children}</BottomSheetView>
+    </BottomSheetModal>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  backdrop: {
-    flex: 1,
-  },
-  sheet: {
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    maxHeight: '75%',
-    paddingTop: 8,
-    overflow: 'hidden',
-  },
-  handle: {
-    width: 40,
-    height: 4,
-    backgroundColor: '#ccc',
-    borderRadius: 2,
-    alignSelf: 'center',
-    marginBottom: 8,
-  },
-});
