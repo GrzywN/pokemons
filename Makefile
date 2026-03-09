@@ -25,6 +25,16 @@ typecheck:
 build:
 	@npm run build
 
+NODE_DIR := $(shell dirname $(shell which node))
+
+build-android-apk:
+	@npx expo prebuild --platform android
+	@cd android && PATH="$(NODE_DIR):$$PATH" ./gradlew assembleDebug
+
+build-android-aab:
+	@npx expo prebuild --platform android
+	@cd android && PATH="$(NODE_DIR):$$PATH" ./gradlew bundleRelease
+
 test:
 	@npm run test
 
