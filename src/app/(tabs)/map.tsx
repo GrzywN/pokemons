@@ -1,13 +1,22 @@
-import { StatusBar } from '@/shared/ui/status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
 
-export default function Camera({
-  appLabel = 'Open up app.tsx to start working on your app!',
-}) {
+import { MapPage } from '@/features/map';
+import { PokemonDetail } from '@/features/detail';
+import { BottomSheet } from '@/shared/ui/bottom-sheet';
+
+export default function MapScreen() {
+  const [selectedPokemon, setSelectedPokemon] = useState<string | null>(null);
+  const hasSelectedPokemon = selectedPokemon != null;
+
   return (
     <View style={styles.container}>
-      <Text>{appLabel}</Text>
-      <StatusBar style="auto" />
+      <MapPage onSelectPokemon={setSelectedPokemon} />
+      <BottomSheet
+        visible={hasSelectedPokemon}
+        onClose={() => setSelectedPokemon(null)}>
+        {hasSelectedPokemon && <PokemonDetail nameOrId={selectedPokemon} />}
+      </BottomSheet>
     </View>
   );
 }
@@ -15,8 +24,5 @@ export default function Camera({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
