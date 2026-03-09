@@ -1,5 +1,13 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
+import { useFavoritePokemon } from '@/shared/pokemon';
+import { Icon } from '@/shared/ui/icon';
 import { Image } from '@/shared/ui/image';
 import { StatusBar } from '@/shared/ui/status-bar';
 import { formatPokemonId } from '@/shared/utils/format-pokemon-id';
@@ -8,9 +16,12 @@ import { usePokemon } from '../use-pokemon';
 
 export interface PokemonDetailProps {
   nameOrId: string | number;
+  onSetFavorite?: () => void;
 }
 
-export function PokemonDetail({ nameOrId }: PokemonDetailProps) {
+export function PokemonDetail({ nameOrId, onSetFavorite }: PokemonDetailProps) {
+  const { favorite } = useFavoritePokemon();
+  const isFavorite = favorite === String(nameOrId);
   const { data, error, isSuccess, isLoading, isError } = usePokemon(nameOrId);
 
   if (isLoading) {
@@ -61,6 +72,13 @@ export function PokemonDetail({ nameOrId }: PokemonDetailProps) {
 
       <Text style={styles.name}>{name}</Text>
       <Text style={styles.id}>{formattedId}</Text>
+
+      {onSetFavorite && !isFavorite && (
+        <TouchableOpacity onPress={onSetFavorite} style={styles.favoriteButton}>
+          <Icon name="star-o" size={16} color="#f5a623" />
+          <Text style={styles.favoriteText}>Add to favorites</Text>
+        </TouchableOpacity>
+      )}
 
       <View style={styles.row}>
         {types.map(({ type }) => (
@@ -140,6 +158,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#888',
     marginBottom: 8,
+  },
+  favoriteButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#f5a623',
+  },
+  favoriteText: {
+    fontSize: 13,
+    color: '#f5a623',
   },
   row: {
     flexDirection: 'row',

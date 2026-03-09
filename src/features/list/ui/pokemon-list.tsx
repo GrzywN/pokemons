@@ -1,3 +1,4 @@
+import { useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
@@ -18,6 +19,7 @@ export function PokemonList({
   skeletonCount = 15,
   endReachedThreshold = 0.5,
 }: PokemonListProps) {
+  const router = useRouter();
   const { favorite, setFavorite, clearFavorite } = useFavoritePokemon();
   const {
     pokemons,
@@ -35,6 +37,7 @@ export function PokemonList({
       <PokemonRow
         item={item}
         isFavorite={favorite === item.name}
+        onPress={() => router.push(`/list/${item.name}`)}
         onStarPress={() =>
           favorite === item.name ? clearFavorite() : setFavorite(item.name)
         }

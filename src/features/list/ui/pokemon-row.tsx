@@ -9,6 +9,7 @@ import { formatPokemonId } from '@/shared/utils/format-pokemon-id';
 export interface PokemonRowProps {
   item: PokemonListItem;
   isFavorite: boolean;
+  onPress: () => void;
   onStarPress: () => void;
   spritePlaceholder?: string;
   spriteTransition?: number;
@@ -17,6 +18,7 @@ export interface PokemonRowProps {
 export const PokemonRow = memo(function PokemonRow({
   item,
   isFavorite,
+  onPress,
   onStarPress,
   spritePlaceholder = 'LKO2?U%2Tw=w]~RBVZRi};RPxuwH',
   spriteTransition = 200,
@@ -24,7 +26,7 @@ export const PokemonRow = memo(function PokemonRow({
   const formattedId = formatPokemonId(item.id);
 
   return (
-    <View style={styles.row}>
+    <TouchableOpacity style={styles.row} onPress={onPress} activeOpacity={0.7}>
       <Image
         source={item.spriteUrl}
         style={styles.sprite}
@@ -43,7 +45,7 @@ export const PokemonRow = memo(function PokemonRow({
           color={isFavorite ? '#f5a623' : '#ccc'}
         />
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 });
 
