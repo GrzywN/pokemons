@@ -41,6 +41,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     bundler: 'metro',
   },
   plugins: [
+    './plugins/withNonModularHeaders',
     'expo-router',
     'expo-image',
     [

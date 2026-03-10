@@ -10,9 +10,7 @@ export interface MapPageProps {
   onSelectPokemon: (name: string) => void;
 }
 
-export function MapPage({
-  onSelectPokemon,
-}: MapPageProps) {
+export function MapPage({ onSelectPokemon }: MapPageProps) {
   const { favorite } = useFavoritePokemon();
   const [pins, setPins] = useState<Pin[]>([]);
 
@@ -31,9 +29,7 @@ export function MapPage({
 
   return (
     <View style={styles.container}>
-      <MapView
-        style={styles.map}
-        onLongPress={handleLongPress}>
+      <MapView style={styles.map} onLongPress={handleLongPress}>
         {pins.map((pin) => (
           <PokemonMarker
             key={pin.id}
