@@ -8,12 +8,10 @@ import { PokemonMarker, type Pin } from './pokemon-marker';
 
 export interface MapPageProps {
   onSelectPokemon: (name: string) => void;
-  provider?: 'google';
 }
 
 export function MapPage({
   onSelectPokemon,
-  provider = 'google',
 }: MapPageProps) {
   const { favorite } = useFavoritePokemon();
   const [pins, setPins] = useState<Pin[]>([]);
@@ -35,7 +33,6 @@ export function MapPage({
     <View style={styles.container}>
       <MapView
         style={styles.map}
-        provider={provider}
         onLongPress={handleLongPress}>
         {pins.map((pin) => (
           <PokemonMarker
